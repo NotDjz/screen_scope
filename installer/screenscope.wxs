@@ -1,0 +1,34 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <!-- Id derives a stable UpgradeCode: never change it, or a newer MSI installs beside the old one
+       instead of replacing it. Per user, because the app writes config.json beside its exe: Program
+       Files would be read-only for it. -->
+  <Package Id="NotDjz.ScreenScope" Name="Screen Scope" Manufacturer="NotDjz"
+           Version="$(var.Version)" Scope="perUser">
+    <MajorUpgrade AllowSameVersionUpgrades="yes"
+                  DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="ProgramsFolder" Name="Programs">
+        <Directory Id="INSTALLFOLDER" Name="ScreenScope" />
+      </Directory>
+    </StandardDirectory>
+
+    <!-- A per-user component needs an HKCU KeyPath and its folders removed on uninstall (ICE38,
+         ICE64). RemoveFolder only removes an empty folder, so config.json and the folder holding
+         it survive an uninstall or an upgrade. A file plus a registry KeyPath cannot get a
+         generated Guid: this one is fixed, never change it. -->
+    <Component Directory="INSTALLFOLDER" Guid="DADE9747-3478-492B-BE95-B4389788192A">
+      <File Id="App" Source="dist\ScreenScope.exe" KeyPath="no">
+        <Shortcut Name="Screen Scope" Directory="ProgramMenuFolder" WorkingDirectory="INSTALLFOLDER" />
+      </File>
+      <RegistryValue Root="HKCU" Key="Software\NotDjz\ScreenScope" Name="Installed" Type="integer"
+                     Value="1" KeyPath="yes" />
+      <RemoveFolder Id="RemoveInstallFolder" On="uninstall" />
+      <RemoveFolder Id="RemoveProgramsFolder" Directory="ProgramsFolder" On="uninstall" />
+    </Component>
+
+    <Icon Id="ScreenScope.ico" SourceFile="screenscope.ico" />
+    <Property Id="ARPPRODUCTICON" Value="ScreenScope.ico" />
+  </Package>
+</Wix>
