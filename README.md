@@ -1,7 +1,7 @@
 # Screen Scope — Crosshair Overlay
 
 A crisp crosshair drawn on top of any game, centered on the monitor you choose.
-Ten presets, no installer — one exe and its config file next to it.
+Ten presets, one exe and its config file next to it — or an installer, if you prefer.
 
 **[Try it in your browser](https://notdjz.github.io/screen_scope/)** ·
 **[Download the latest release](https://github.com/NotDjz/screen_scope/releases/latest)**
@@ -15,6 +15,11 @@ Download `ScreenScope.exe` from the
 [releases page](https://github.com/NotDjz/screen_scope/releases/latest) and run it:
 the crosshair appears at the centre of the screen. Right-click the system tray icon
 for the menu.
+
+Or take `ScreenScope-<version>-x64.msi` from the same release and double-click it: it
+installs for your account only (no admin prompt) into `%LOCALAPPDATA%\Programs\ScreenScope`,
+where the app can keep its `config.json`, and adds Screen Scope to the Start Menu.
+Uninstall it from Settings > Apps: `config.json` stays.
 
 ## Hotkeys
 
@@ -92,7 +97,4 @@ Needs Python 3 and `py -m pip install -r requirements.txt`
 ### Installer
 
 `pwsh ./build-msi.ps1` runs `build.bat`, then builds `dist\ScreenScope-<version>-x64.msi`
-with [WiX 7](https://wixtoolset.org) (`dotnet tool install -g wix`). Double-click it: it
-installs for your account only (no admin prompt) into
-`%LOCALAPPDATA%\Programs\ScreenScope`, where the app can keep its `config.json`, and adds
-Screen Scope to the Start Menu. Uninstall it from Settings > Apps: `config.json` stays.
+with [WiX 7](https://wixtoolset.org) (`dotnet tool install -g wix`).
