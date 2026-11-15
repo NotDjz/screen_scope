@@ -88,3 +88,11 @@ Needs Python 3 and `py -m pip install -r requirements.txt`
 1. `py generate_icon.py`
 2. `build.bat`
 3. The executable lands in `dist\ScreenScope.exe`
+
+### Installer
+
+`pwsh ./build-msi.ps1` runs `build.bat`, then builds `dist\ScreenScope-<version>-x64.msi`
+with [WiX 7](https://wixtoolset.org) (`dotnet tool install -g wix`). Double-click it: it
+installs for your account only (no admin prompt) into
+`%LOCALAPPDATA%\Programs\ScreenScope`, where the app can keep its `config.json`, and adds
+Screen Scope to the Start Menu. Uninstall it from Settings > Apps: `config.json` stays.
